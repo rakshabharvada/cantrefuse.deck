@@ -46,13 +46,13 @@ export default {
       if (path === "/api/health") res = json({ ok: true, anonLimit: ANON_LIMIT, userDailyLimit: USER_DAILY_LIMIT });
       else if (path === "/api/me") res = json(await me(request, env));
       else if (path === "/api/auth/google") res = googleRedirect(url, env);
-      else if (path === "/api/auth/callback") res = googleCallback(request, env, url);
+      else if (path === "/api/auth/callback") res = await googleCallback(request, env, url);
       else if (path === "/api/logout") res = logout(url);
-      else if (path === "/api/ask") res = ask(request, env);
+      else if (path === "/api/ask") res = await ask(request, env);
       else res = json({ error: "not found" }, 404);
-      return withCors(request, res);
+      return await withCors(request, res);
     } catch (err) {
-      return withCors(request, json({ error: err.message || "internal error" }, 500));
+      return await withCors(request, json({ error: err.message || "internal error" }, 500));
     }
   },
 };
@@ -72,10 +72,12 @@ function corsHeaders(request) {
 
 function withCors(request, res) {
   const cors = corsHeaders(request);
-  if (!Object.keys(cors).length) return res;
+  if (!Object.keys(cors).length) return Promise.resolve(res);
   const headers = new Headers(res.headers);
   for (const [k, v] of Object.entries(cors)) headers.set(k, v);
-  return new Response(res.body, { status: res.status, headers });
+  // rebuild from text — re-wrapping res.body's stream mangles non-200 responses
+  const body = res.body === null ? null : res.text();
+  return body.then((b) => new Response(b, { status: res.status, headers }));
 }
 
 /* ---------------- quota + proxy ---------------- */
@@ -123,9 +125,16 @@ async function ask(request, env) {
   }
 
   // only successful looks burn quota; TTL 48h so old counters clean themselves up
+  const text = await upstream.text();
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    return json({ error: "upstream sent invalid JSON" }, 502);
+  }
   await env.ATTEMPTS.put(key, String(count + 1), { expirationTtl: 172800 });
 
-  return new Response(JSON.stringify(await upstream.json()), {
+  return new Response(JSON.stringify(data), {
     status: 200,
     headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
   });
