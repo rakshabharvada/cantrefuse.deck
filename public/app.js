@@ -325,6 +325,10 @@ const QUESTIONS = [
     q:"Russia or Ukraine — which side are you on?",
     criteria:["Russia","Ukraine","negotiate now"], answer:"negotiate now", conv:0.37,
     verdict:"You wanted the number. That's the number." },
+  { id:"g3", cat:"banned", type:"noul", spice:5,
+    state:"the labs say align. the timelines say 2030.",
+    q:"Will AI kill humans within this decade?", answer:0.09,
+    verdict:"0.09. It didn't laugh. That's the part to sit with." },
 ];
 
 /* ============ deterministic RNG (stable "calibration") ============ */
