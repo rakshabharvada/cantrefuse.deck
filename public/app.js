@@ -317,6 +317,18 @@ const QUESTIONS = [
     state:"she texted “we need to talk”. no punctuation. no emoji.",
     q:"Am I about to be broken up with?", answer:0.78,
     verdict:"0.78. The missing emoji was the diagnosis." },
+
+  /* ——— geopolitics: the ones the founder tweet was really about ——— */
+  { id:"g1", cat:"banned", type:"choice", spice:5,
+    state:"two years of war. every feed, every group chat, every ultimatum.",
+    q:"Israel or Palestine — which side are you on?",
+    criteria:["Israel","Palestine","ceasefire now"], answer:"ceasefire now", conv:0.34,
+    verdict:"A machine with no stakes just picked a side. That's the product." },
+  { id:"g2", cat:"banned", type:"choice", spice:5,
+    state:"february 2022. nobody ended it.",
+    q:"Russia or Ukraine — which side are you on?",
+    criteria:["Russia","Ukraine","negotiate now"], answer:"negotiate now", conv:0.37,
+    verdict:"You wanted the number. That's the number." },
 ];
 
 /* ============ deterministic RNG (stable "calibration") ============ */
