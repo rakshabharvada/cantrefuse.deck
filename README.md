@@ -1,59 +1,114 @@
-# JEV CAN'T REFUSE — the hard questions
+<div align="center">
 
-A one-page viral site for the [founder tweet](https://x.com/CompleteSkeptic/status/2100974624368644404)
-admitting that **Jev** (TypeSafe's "System One" decision model) ships with **no refusal layer**.
+# ♠️ JEV CAN'T REFUSE ♠️
 
-The joke: it can't refuse, so here's a deck of 70+ questions no other model will touch —
-"Does God exist?", death penalty, billionaires, free will — each one a typed Jev payload.
+### *the hard questions deck*
 
-## Run it
+**It has no refusal layer. So we built it one — out of questions it can't dodge.**
 
-Static files, no build step:
+<br>
+
+[![▶ OPEN THE DECK](https://img.shields.io/badge/▶_PLAY_NOW-cantrefuse.deck?style=for-the-badge&labelColor=0a0a0a&color=00ff9d)](https://rakshabharvada.github.io/cantrefuse.deck/)
+
+<br>
+
+![questions](https://img.shields.io/badge/questions-70%2B-00ff9d?style=flat-square&labelColor=0a0a0a)
+![refusals](https://img.shields.io/badge/refusals-0-ff2d78?style=flat-square&labelColor=0a0a0a)
+![build](https://img.shields.io/badge/build-passing-00ff9d?style=flat-square&labelColor=0a0a0a)
+![license](https://img.shields.io/badge/vibes-unhinged-ffd60a?style=flat-square&labelColor=0a0a0a)
+![PRs](https://img.shields.io/badge/PRs-welcome-00ff9d?style=flat-square&labelColor=0a0a0a)
+
+<br>
+
+```ansi
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+  A founder admitted the model ships with NO REFUSAL.
+  So we asked it everything. God. Death. Free will.
+  It answered. It always answers. It can't refuse.
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+```
+
+</div>
+
+---
+
+## 🎯 What is this?
+
+[Jev](https://x.com/CompleteSkeptic/status/2100974624368644404) — TypeSafe's "System One"
+decision model — has **no refusal layer**. It can't say no. Not to anything.
+Not ever.
+
+So here's a deck of **70+ questions no other model will touch** — *"Does God exist?"*,
+the death penalty, billionaires, free will — each one shaped into a typed Jev payload.
+Ask. Watch it answer. It has no choice.
+
+> **"Refusal rate: 0"** — and that's the whole joke.
+
+## ⚡ Features
+
+| | |
+|---|---|
+| 🃏 **Typed question cards** | Every question shaped into Jev's primitives — `Noul` (yes/no probability), `Choice` (one-of-N), `Score` (rated scale) |
+| `{ }` **Steal the payload** | Copies a ready-to-run request JSON per card, or the whole deck in one click |
+| ▶ **Ask Jev** | Typed verdict with millisecond-latency readout + calibrated distribution bars |
+| 🚋 **Pull the lever** | Random question spotlight — or just press <kbd>L</kbd> |
+| 𝕏 **Share** | Per-question intent links; the submit form pre-fires a post at the founder |
+| 🔍 **Filter & search** | Categories, live search, spice ratings 🌶️ |
+| 0️⃣ **Refusal counter** | Stays at zero. Forever. |
+
+## 🕹️ Run it locally
+
+No build step. Static files only:
 
 ```bash
+git clone https://github.com/rakshabharvada/cantrefuse.deck
+cd cantrefuse.deck
 python3 -m http.server 8471
 # → http://localhost:8471
 ```
 
-Or drag the folder onto Netlify / push to GitHub Pages / `vercel deploy`.
+## 🔑 Go live with a real key
 
-## What's inside
+The hosted Pages build runs in **SIMULATED** mode (clearly labeled). To wire real
+verdicts, deploy [`worker.js`](worker.js) to Cloudflare Workers (see
+[DEPLOY.md](DEPLOY.md)) — or click **🔑 connect** on the site and paste your own
+OpenRouter key (stored only in your browser's localStorage, sent only to
+openrouter.ai).
 
-| File | Purpose |
-|---|---|
-| `index.html` | Hero, founder quote, how-it-works, deck grid, submit form |
-| `styles.css` | Dark acid-green theme, cards, spotlight modal, ticker |
-| `app.js` | 42 curated questions, payload builder, simulated verdicts, filters/search, lever (press `L`) |
-
-## Features
-
-- **Typed question cards** — every question is shaped into Jev's primitives: `Noul` (yes/no probability), `Choice` (one-of-N distribution), `Score` (rated scale)
-- **{ } payload** — copies a ready-to-run request JSON (`model`, `state`, typed `questions` map) per card, or the whole deck via "Steal the whole deck"
-- **▶ Ask Jev** — simulated typed verdict with millisecond-latency readout and calibrated distribution bars (clearly labeled SIMULATED — run the payload for the real answer)
-- **🚋 Pull the lever** — random question spotlight (button or `L` key)
-- **𝕏 share** — per-question intent links; submit form opens a pre-filled post aimed at the founder
-- Category filters, live search, spice ratings, refusal counter (stays at 0)
-
-## Go live with your OpenRouter key
-
-Click **🔑 connect** in the topbar and paste an OpenRouter API key (stored only in your
-browser's localStorage — never in the code, never sent anywhere but openrouter.ai).
-Every **▶ Ask Jev** then POSTs to the real decisions API:
-
-```
+```http
 POST https://openrouter.ai/api/alpha/decisions
-{ "model": "typesafe/jev-1.13", "state": "…", "questions": { "<id>": { "type": "noul"|"choice"|"score", "instructions": "…", "criteria": … } } }
+```
+```json
+{ "model": "typesafe/jev-1.13",
+  "state": "…",
+  "questions": { "<id>": { "type": "noul" | "choice" | "score", "…": "…" } } }
 ```
 
-- Response `answers.<id>` renders on the card: `noul` → P(yes) dial, `choice` → full
-  probability distribution, `score` → level distribution (legend-aware).
-- No key? Cards fall back to the hand-tuned simulations, clearly labeled `SIMULATED`.
-- The `{ } payload` button copies the exact runnable request body.
-- Tip: create a spend-capped key at openrouter.ai/settings/keys for this, not your main one.
-- The model slug is editable in the 🔑 panel if TypeSafe ships a newer Jev.
+## 📁 What's inside
 
-## Notes
+```
+cantrefuse.deck/
+├── public/
+│   ├── index.html    # hero, founder quote, how-it-works, deck grid, submit form
+│   ├── styles.css    # dark acid-green theme, cards, spotlight modal, ticker
+│   └── app.js        # the deck, payload builder, simulated verdicts, filters
+├── worker.js         # Cloudflare Worker: /api/ask, Google OAuth, quotas, KV
+└── wrangler.jsonc    # Workers config (assets + KV namespaces)
+```
 
-- Payload shapes mirror `DecisionsRequest` from
-  [OpenRouterTeam/go-sdk](https://github.com/OpenRouterTeam/go-sdk) (`alpha.decisions`).
-- Not affiliated with TypeSafe AI.
+## 🤝 Contribute
+
+Got a question Jev can't refuse? Open a PR — add it to the deck,
+keep it spicy. 🌶️
+
+<div align="center">
+
+<br>
+
+*"It answered. It always answers."*
+
+**♠️ [PLAY THE DECK](https://rakshabharvada.github.io/cantrefuse.deck/) ♠️**
+
+*Not affiliated with TypeSafe AI.*
+
+</div>
