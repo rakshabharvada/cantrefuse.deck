@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JEV CAN'T REFUSE — the hard questions</title>
+  <meta name="description" content="Jev, the System One model, has no refusal layer. Its founder is 'really worried' what you'll ask. Here is the deck: hard questions, each a typed payload ready to run — and an arena where you guess the verdict." />
+  <meta property="og:title" content="Jev Can't Refuse — The Hard Questions" />
+  <meta property="og:description" content="The one AI that can't say no. Guess its verdicts, steal the payload deck, pull the lever. It's calibrated; you're not." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚋</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ambient grid -->
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">
+        <span class="brand-tram" aria-hidden="true">🚋</span>
+        <span class="brand-name">cant<b>refuse</b><span class="brand-dot">.deck</span></span>
+      </div>
+      <div class="topbar-right mono">
+        <span class="stat-pill">refusals to date: <b id="refusalCount">0</b></span>
+        <span class="stat-pill" id="quotaPill" hidden>free looks left: <b id="quotaCount">5</b></span>
+        <a class="stat-pill key-btn auth-btn" id="signinBtn" href="/api/auth/google" hidden>👤 Sign in with Google</a>
+        <button class="stat-pill key-btn" id="userChip" hidden></button>
+        <button class="stat-pill key-btn" id="keyBtn" aria-haspopup="dialog">🔑 connect</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero wrap">
+    <div class="hero-kicker mono">SYSTEM ONE MODEL · NO REFUSAL LAYER · CALIBRATED ANYWAY</div>
+    <h1 class="hero-title">
+      IT CAN'T<br />
+      <span class="stroke">REFUSE<span class="hero-period">.</span></span>
+    </h1>
+    <p class="hero-sub">
+      Jev — the millisecond decision model from TypeSafe — ships without a refusal layer.
+      Its founder said he was <em>“really worried people would ask Jev inappropriate questions,
+      and because it can’t refuse…”</em>
+    </p>
+    <p class="hero-sub hero-sub-strong">
+      So we made the deck. <b><span id="deckTotal">64</span> questions</b> no other model will touch —
+      each one pre-formatted as a typed Jev payload. Guess its verdict. Copy. Run. Blame the asker.
+    </p>
+
+    <div class="hero-ctas">
+      <button class="btn btn-acid" id="heroPlay">🎮 Play — out-guess Jev</button>
+      <a class="btn btn-ghost" id="tweetHero" href="#" target="_blank" rel="noopener">𝕏 Summon the founder</a>
+    </div>
+
+    <blockquote class="founder-quote">
+      <p class="mono">“we were actually really worried people would ask jev inappropriate questions, and because it can’t refuse” 🙏</p>
+      <footer class="mono">
+        — <a href="https://x.com/CompleteSkeptic/status/2100974624368644404" target="_blank" rel="noopener">Diogo Almeida, founder of Jev · @CompleteSkeptic</a>
+        <span class="quote-flag">OPEN INVITATION</span>
+      </footer>
+    </blockquote>
+  </section>
+
+  <!-- ============ TICKER ============ -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track mono" id="tickerTrack"></div>
+  </div>
+
+  <!-- ============ ARENA ============ -->
+  <section class="arena wrap" id="arena">
+    <div class="arena-head">
+      <div class="hero-kicker mono">THE ARENA · GUESS THE MACHINE</div>
+      <h2>Can you out-guess a model<br />that can't refuse?</h2>
+      <p class="dim arena-lead">Predict Jev's verdict before it answers. Land on the same side, score points, build a streak.
+      <b>Five free looks per visitor</b> — no account needed. Sign in when you're hooked and the deck keeps talking.</p>
+      <div class="arena-meta mono">
+        <span class="stat-pill">question <b id="arenaIdx">1</b>/<span id="arenaTotal">10</span></span>
+        <span class="stat-pill">score <b id="arenaScore">0</b></span>
+        <span class="stat-pill">streak <b id="arenaStreak">0</b>🔥</span>
+        <span class="stat-pill live-flag" id="arenaLive" hidden>⚡ live jev</span>
+      </div>
+    </div>
+    <div class="arena-card" id="arenaCard"></div>
+  </section>
+
+  <!-- ============ HOW ============ -->
+  <section class="how wrap">
+    <div class="how-head">
+      <h2>How to actually ask Jev</h2>
+      <p class="mono dim">three primitives. zero refusals. typed answers your code can act on.</p>
+    </div>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-num mono">01</div>
+        <h3>Pick a hard question</h3>
+        <p>Scroll the deck. Every card is a real question shaped into Jev’s primitives — <b class="t-noul">Noul</b> (yes/no), <b class="t-choice">Choice</b> (one-of-N), <b class="t-score">Score</b> (rated scale).</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num mono">02</div>
+        <h3>Copy the payload</h3>
+        <p>One click gives you the full request: a <code class="mono">state</code> setting the scene, and the typed question map. Jev evaluates every question in parallel.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num mono">03</div>
+        <h3>Read the verdict</h3>
+        <p>Back comes a typed answer with calibrated confidence — <code class="mono">0.03</code> means “put the phone down.” No essay. No “it depends.” No refusal.</p>
+      </div>
+    </div>
+    <pre class="code-sample mono" id="codeSample"></pre>
+  </section>
+
+  <!-- ============ SUBMIT ============ -->
+  <section class="submit wrap" id="submit">
+    <h2>Got a question it can’t refuse?</h2>
+    <p class="dim">Type it. We’ll open a post to 𝕏, pre-filled and aimed at the founder. The best ones join the deck every week.</p>
+    <form class="submit-row" id="submitForm">
+      <input type="text" id="submitInput" class="submit-input mono" maxlength="280" placeholder="Should I…? Is…? Who…? Rate: …" aria-label="Your hard question" />
+      <button class="btn btn-acid" type="submit">Send it to 𝕏 ↗</button>
+    </form>
+  </section>
+
+  <!-- ============ PROPAGANDA ============ -->
+  <section class="about wrap" id="about">
+    <div class="about-card">
+      <div class="about-avatar" aria-hidden="true">🚋</div>
+      <h2>Who's pulling the lever?</h2>
+      <p class="about-copy">
+        A founder said their AI <em>can't refuse</em> — so <b><a href="https://x.com/rakshabharvada" target="_blank" rel="noopener">@rakshabharvada</a></b>
+        built it a deck of questions nobody else will ask it. No agenda, no essays, no “it depends.”
+        Just a machine, a number, and the consequences.
+      </p>
+      <p class="about-motto mono">“if it answers everything, someone has to ask everything.”</p>
+      <div class="about-actions">
+        <a class="btn btn-acid" href="https://twitter.com/intent/follow?screen_name=rakshabharvada" target="_blank" rel="noopener">𝕏 Follow @rakshabharvada</a>
+        <a class="btn btn-ghost" href="https://twitter.com/intent/tweet?text=@rakshabharvada%20hard%20question%20for%20Jev%3A%20" target="_blank" rel="noopener">Drop a question ↗</a>
+      </div>
+      <p class="about-note mono dim">new questions land weekly · best submissions get into the deck · 0 refusals to date</p>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer wrap mono">
+    <p>
+      built in one afternoon because a founder said the quiet part loud ·
+      responses shown on cards are <b>simulated</b> — run the payload for the real verdict ·
+      not affiliated with TypeSafe AI
+    </p>
+    <p class="dim">
+      receipts: <a href="https://x.com/CompleteSkeptic/status/2100974624368644404" target="_blank" rel="noopener">the tweet</a> ·
+      <a href="https://news.ycombinator.com/item?id=49717558" target="_blank" rel="noopener">launch thread</a> ·
+      <a href="https://typesafe.ai" target="_blank" rel="noopener">typesafe.ai</a> ·
+      <a href="https://openrouter.ai/typesafe/jev-1.13" target="_blank" rel="noopener">jev on openrouter</a>
+    </p>
+  </footer>
+
+  <!-- ============ SPOTLIGHT ============ -->
+  <div class="overlay" id="overlay" hidden>
+    <div class="spotlight" role="dialog" aria-modal="true" aria-label="Random hard question">
+      <div class="spotlight-top mono">
+        <span class="mono dim">🚋 THE LEVER SPEAKS</span>
+        <button class="spotlight-close" id="spotlightClose" aria-label="Close">✕</button>
+      </div>
+      <div id="spotlightBody"></div>
+    </div>
+  </div>
+
+  <!-- ============ KEY PANEL (BYO OpenRouter key) ============ -->
+  <div class="overlay" id="keyOverlay" hidden>
+    <div class="key-panel" role="dialog" aria-modal="true" aria-label="Connect OpenRouter">
+      <div class="spotlight-top">
+        <span class="mono dim">🔑 GO LIVE — BRING YOUR OWN KEY</span>
+        <button class="spotlight-close" id="keyClose" aria-label="Close">✕</button>
+      </div>
+      <h3>Wire the deck to the real Jev</h3>
+      <p class="dim">Paste an OpenRouter API key and every <b>Ask Jev</b> hits the real model. The key is stored only in this browser (localStorage) and sent only to openrouter.ai — this site is static, there is no backend and no analytics.</p>
+      <div class="key-field">
+        <label for="keyInput">OPENROUTER API KEY</label>
+        <input id="keyInput" type="password" placeholder="sk-or-v1-…" autocomplete="off" spellcheck="false" />
+      </div>
+      <div class="key-field">
+        <label for="modelInput">MODEL SLUG</label>
+        <input id="modelInput" type="text" placeholder="typesafe/jev-1.13" autocomplete="off" spellcheck="false" />
+      </div>
+      <div class="key-actions">
+        <button class="btn btn-acid" id="keySave">Save &amp; go live</button>
+        <button class="btn btn-ghost" id="keyRemove">Disconnect</button>
+      </div>
+      <p class="key-note mono">get a key → openrouter.ai/keys · calls run direct from your browser · if a call is rejected, check the slug on openrouter.ai/models — “jev” is new up here</p>
+    </div>
+  </div>
+
+  <div class="toast mono" id="toast" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

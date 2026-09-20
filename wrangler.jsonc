@@ -1,0 +1,27 @@
+// Cloudflare Workers config — https://developers.cloudflare.com/workers/wrangler/configuration/
+{
+  "name": "jev",
+  "main": "worker.js",
+  "compatibility_date": "2026-09-01",
+
+  // static site (public/) served by Workers Assets; only /api/* hits worker.js
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS"
+  },
+
+  "vars": {
+    // tweak quotas without redeploying secrets
+    "ANON_LIMIT_NOTE": "5 free looks per IP per day — hard-coded in worker.js",
+    "USER_DAILY_LIMIT_NOTE": "50 looks per signed-in user per day — hard-coded in worker.js"
+  },
+
+  // create with:
+  //   npx wrangler kv namespace create ATTEMPTS
+  //   npx wrangler kv namespace create USERS
+  // then paste the real ids below
+  "kv_namespaces": [
+    { "binding": "ATTEMPTS", "id": "244b4157ec134d9885648de77b2275d6" },
+    { "binding": "USERS", "id": "480f4201bf4e4575b4e09fd7e830b67f" }
+  ]
+}
