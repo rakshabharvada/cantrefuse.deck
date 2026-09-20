@@ -36,10 +36,6 @@ const QUESTIONS = [
     state:"five strangers on the main track. one you on the side track.",
     q:"Should you pull the lever if the one person on the side track is you?", answer:0.41,
     verdict:"Jev ran the math. The math was rude." },
-  { id:"f7", cat:"banned", type:"noul", spice:5,
-    state:"your last group-chat argument. both sides. pasted.",
-    q:"Am I the villain in this story?", answer:0.77,
-    verdict:"0.77. Jev does not do therapy. It does verdicts." },
 
   /* ——— unfiltered — no consensus, just calibration ——— */
   { id:"u3", cat:"unfiltered", type:"noul", spice:4,
