@@ -27,23 +27,56 @@ const ANON_LIMIT = 5;        // free looks per IP per day
 const USER_DAILY_LIMIT = 50; // looks per signed-in user per day
 const SESSION_TTL_S = 60 * 60 * 24 * 30; // 30 days
 
+// The github.io deployment is static-only and calls /api/* cross-origin.
+// Origin is pinned (never "*") and credentials are never allowed, so the
+// session cookie stays unreachable from other origins. The OpenRouter key
+// never leaves this worker — CORS only lets the Pages frontend *use* the
+// quota-capped backend, the same way workers.dev visitors already do.
+const PAGES_ORIGIN = "https://rakshabharvada.github.io";
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const path = url.pathname;
+    if (request.method === "OPTIONS" && path.startsWith("/api/")) {
+      return new Response(null, { status: 204, headers: corsHeaders(request) });
+    }
     try {
-      if (path === "/api/health") return json({ ok: true, anonLimit: ANON_LIMIT, userDailyLimit: USER_DAILY_LIMIT });
-      if (path === "/api/me") return json(await me(request, env));
-      if (path === "/api/auth/google") return googleRedirect(url, env);
-      if (path === "/api/auth/callback") return googleCallback(request, env, url);
-      if (path === "/api/logout") return logout(url);
-      if (path === "/api/ask") return ask(request, env);
-      return json({ error: "not found" }, 404);
+      let res;
+      if (path === "/api/health") res = json({ ok: true, anonLimit: ANON_LIMIT, userDailyLimit: USER_DAILY_LIMIT });
+      else if (path === "/api/me") res = json(await me(request, env));
+      else if (path === "/api/auth/google") res = googleRedirect(url, env);
+      else if (path === "/api/auth/callback") res = googleCallback(request, env, url);
+      else if (path === "/api/logout") res = logout(url);
+      else if (path === "/api/ask") res = ask(request, env);
+      else res = json({ error: "not found" }, 404);
+      return withCors(request, res);
     } catch (err) {
-      return json({ error: err.message || "internal error" }, 500);
+      return withCors(request, json({ error: err.message || "internal error" }, 500));
     }
   },
 };
+
+/* ---------------- CORS (GitHub Pages frontend only) ---------------- */
+
+function corsHeaders(request) {
+  if ((request.headers.get("Origin") || "") !== PAGES_ORIGIN) return {};
+  return {
+    "Access-Control-Allow-Origin": PAGES_ORIGIN,
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Max-Age": "86400",
+    "Vary": "Origin",
+  };
+}
+
+function withCors(request, res) {
+  const cors = corsHeaders(request);
+  if (!Object.keys(cors).length) return res;
+  const headers = new Headers(res.headers);
+  for (const [k, v] of Object.entries(cors)) headers.set(k, v);
+  return new Response(res.body, { status: res.status, headers });
+}
 
 /* ---------------- quota + proxy ---------------- */
 

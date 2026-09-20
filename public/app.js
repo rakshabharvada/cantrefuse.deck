@@ -409,10 +409,12 @@ function wireKeyPanel(){
 function refreshKeyPanelState(){ refreshKeyBtn(); }
 
 /* ============ backend (cloudflare worker) ============ */
+// GitHub Pages is static-only (no /api/*) — from there, talk to the live worker cross-origin.
+const API_BASE = location.hostname.endsWith("github.io") ? "https://jev.cantrefuse.workers.dev" : "";
 const API = { ok: false, me: null };
 async function apiInit(){
   try {
-    const r = await fetch("/api/health", { cache: "no-store" });
+    const r = await fetch(API_BASE + "/api/health", { cache: "no-store" });
     if (!r.ok) return;
     const j = await r.json();
     if (!j || j.ok !== true) return;
@@ -422,7 +424,7 @@ async function apiInit(){
 }
 async function refreshMe(){
   try {
-    const r = await fetch("/api/me", { cache: "no-store" });
+    const r = await fetch(API_BASE + "/api/me", { cache: "no-store" });
     API.me = r.ok ? await r.json() : null;
   } catch { API.me = null; }
   updateAuthUI();
@@ -430,6 +432,7 @@ async function refreshMe(){
 function updateAuthUI(){
   const prod = API.ok;
   const loggedIn = !!(prod && API.me && API.me.loggedIn);
+  $("#signinBtn").href = API_BASE + "/api/auth/google"; // navigations don't need CORS
   $("#keyBtn").hidden = prod;               // production uses the server-side key
   $("#signinBtn").hidden = !(prod && !loggedIn);
   const chip = $("#userChip");
@@ -445,7 +448,7 @@ function updateAuthUI(){
 
 async function fetchViaWorker(q){
   const t0 = performance.now();
-  const r = await fetch("/api/ask", {
+  const r = await fetch(API_BASE + "/api/ask", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payloadFor(q)),
@@ -949,7 +952,7 @@ function renderArena(){
       <div class="a-banner miss mono">THAT WAS YOUR FIVE FREE LOOKS</div>
       <p class="dim arena-sub">Every verdict costs real compute — someone is paying for this millisecond by millisecond.
       Sign in and the deck keeps talking. We save only your email, and your streak comes back with it.</p>
-      <div class="a-actions"><a class="btn btn-acid" href="/api/auth/google">👤 Continue with Google — keep playing</a></div>
+      <div class="a-actions"><a class="btn btn-acid" href="${API_BASE}/api/auth/google">👤 Continue with Google — keep playing</a></div>
       <p class="about-note mono dim">signed in: ${daily} looks a day · stored: your email, nothing else</p>`;
     return;
   }
@@ -1003,4 +1006,4 @@ updateAuthUI();
 renderArena();
 $("#deckTotal").textContent = QUESTIONS.length;
 apiInit();
-$("#userChip").addEventListener("click", ()=>{ if (API.ok) location.href = "/api/logout"; });
+$("#userChip").addEventListener("click", ()=>{ if (API.ok) location.href = API_BASE + "/api/logout"; });
