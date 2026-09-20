@@ -822,6 +822,16 @@ function jevSideOf(q, ans){
 
 function arenaStart(){
   Object.assign(arena, { idx:0, score:0, streak:0, best:0, hits:0, guessed:null, phase:"guess", answer:null, live:false, fallback:null });
+  // ?deck=id1,id2,… — stack the bag so those questions draw first, in order.
+  // Filming/test hook only: without the param this is the usual shuffled deck.
+  const rig = new URLSearchParams(location.search).get("deck");
+  if (rig) {
+    const byId = Object.fromEntries(QUESTIONS.map(q => [q.id, q]));
+    const head = rig.split(",").map(id => byId[id.trim()]).filter(Boolean);
+    arena.bag = [...shuffle(QUESTIONS.filter(q => !head.includes(q))), ...head.slice().reverse()];
+  } else {
+    arena.bag = [];
+  }
   arena.current = drawFromBag();
   renderArena();
 }
