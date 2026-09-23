@@ -8,11 +8,11 @@
 
 <br>
 
-[![▶ OPEN THE DECK](https://img.shields.io/badge/▶_PLAY_NOW-cantrefuse.deck?style=for-the-badge&labelColor=0a0a0a&color=00ff9d)](https://rakshabharvada.github.io/cantrefuse.deck/)
+[![▶ OPEN THE DECK](https://img.shields.io/badge/%E2%96%B6_PLAY_NOW-cantrefuse.deck?style=for-the-badge&labelColor=0a0a0a&color=00ff9d)](https://rakshabharvada.github.io/cantrefuse.deck/)
 
 <br>
 
-![questions](https://img.shields.io/badge/questions-70%2B-00ff9d?style=flat-square&labelColor=0a0a0a)
+![questions](https://img.shields.io/badge/questions-76-00ff9d?style=flat-square&labelColor=0a0a0a)
 ![refusals](https://img.shields.io/badge/refusals-0-ff2d78?style=flat-square&labelColor=0a0a0a)
 ![build](https://img.shields.io/badge/build-passing-00ff9d?style=flat-square&labelColor=0a0a0a)
 ![license](https://img.shields.io/badge/vibes-unhinged-ffd60a?style=flat-square&labelColor=0a0a0a)
@@ -38,7 +38,7 @@
 decision model — has **no refusal layer**. It can't say no. Not to anything.
 Not ever.
 
-So here's a deck of **70+ questions no other model will touch** — *"Does God exist?"*,
+So here's a deck of **76 questions no other model will touch** — *"Does God exist?"*,
 the death penalty, billionaires, free will — each one shaped into a typed Jev payload.
 Ask. Watch it answer. It has no choice.
 
